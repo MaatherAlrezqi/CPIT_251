@@ -76,18 +76,18 @@ public class schoolFinder {
     }
 
     private static void deleteRequests(Scanner scanner) {
-        // Implement deletion logic here
-        System.out.println("Deleting requests...");
+      
+      //  System.out.println("Deleting requests...");
     }
 
     private static void updateRequest(Scanner scanner) {
-        // Implement update logic here
-        System.out.println("Updating requests...");
+        
+        //System.out.println("Updating requests...");
     }
 
     private static void showRequestStatus(Scanner scanner) {
-        // Implement status display logic here
-        System.out.println("Showing request status...");
+      
+        // System.out.println("Showing request status...");
     }
 
     private static String chooseDisability(Scanner scanner) {
@@ -166,7 +166,7 @@ public class schoolFinder {
     }
 
     private static void sendApplication(Request request) {
-        // Implement application sending logic here
+        
         System.out.println("Application sent to " + request.getSchool().getName() + " for " + request.getChild().getName());
     }
     
