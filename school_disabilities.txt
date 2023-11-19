@@ -1,0 +1,7 @@
+SchoolA, Autism
+SchoolA, ADHD
+SchoolB, Dyslexia
+SchoolC, Down Syndrome
+SchoolC, Visual Impairment
+SchoolD, Cerebral Palsy
+SchoolD, Hearing Impairment

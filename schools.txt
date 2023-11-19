@@ -1,0 +1,4 @@
+SchoolA, District1, LeaderA
+SchoolB, District2, LeaderB
+SchoolC, District1, LeaderC
+SchoolD, District3, LeaderD
