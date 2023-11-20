@@ -1,7 +1,8 @@
-SchoolA, Autism
-SchoolA, ADHD
-SchoolB, Dyslexia
-SchoolC, Down Syndrome
-SchoolC, Visual Impairment
-SchoolD, Cerebral Palsy
-SchoolD, Hearing Impairment
+Al-Bayan school, Cerebral Palsy - Visual Impairment - Hearing Impairment
+Al-Baraem school, ADHD -  Visual Impairment - Hearing Impairment - Down Syndrome - intellectual disability
+Al-Bashaer school, Dyslexia - Conduct Disorder (CD) - intellectual disability - Orthopedic impairment
+Dar Althikr school, Down Syndrome - Dyslexia - Cerebral Palsy - Hearing Impairment
+Al-Taqwa school, Visual Impairment - Conduct Disorder (CD) - Dyslexia - ADHD
+Al-Shibl school, Cerebral Palsy - Autism - Orthopedic impairment
+Al Maqased International School, Hearing Impairment - ADHD - Autism
+Al Hukamaa International School, Dyslexia - Conduct Disorder (CD) - intellectual disability - Orthopedic impairment - ADHD

@@ -1,4 +1,8 @@
-SchoolA, District1, LeaderA
-SchoolB, District2, LeaderB
-SchoolC, District1, LeaderC
-SchoolD, District3, LeaderD
+Al-Bayan school, Al-Andalus District, Fatimah Ali
+Al-Baraem school, Sharafiyah District, Auhood Mohamed
+Al-Bashaer school, Bryman District, Alaa Ahmed
+Dar Althikr school, Naeem District, Haneen Salem 
+Al-Taqwa school, Al-Fayha'a District, Yasmeen Abduallah 
+Al-Shibl school, Al-Rawda District, Khoolod Ahmed
+Al Maqased International School, Al-Rehab District, Norah Abdulaziz
+Al Hukamaa International School, Mishrifah District, Zeina Saleh
