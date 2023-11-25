@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class inclusiveSchoolFinder {
-
+    private static List<Request> requests = new ArrayList<>();
     private static Map<String, School> schoolsMap = new HashMap<>();
     private static Map<String, Disability> disabilitiesMap = new HashMap<>();
     private static Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
@@ -20,7 +20,7 @@ public class inclusiveSchoolFinder {
         readSchoolsFromFile("schools.txt");
         readDisabilitiesFromFile("disabilities.txt");
         readSchoolsDisabilitiesFromFile("school_disabilities.txt");
-
+      
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -34,26 +34,27 @@ public class inclusiveSchoolFinder {
 
             choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    registerChild(scanner);
-                    break;
-                case 2:
-                    deleteRequests(scanner);
-                    break;
-                case 3:
-                    updateRequest(scanner);
-                    break;
-                case 4:
-                    showRequestStatus(scanner);
-                    break;
-                case 0:
-                    System.out.println("Exiting the system. Goodbye!");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-
+        switch (choice) {
+            case 1:
+                registerChild(scanner);
+                break;
+            case 2:
+                FileManagment.deleteRequests(scanner);
+                break;
+            case 3:
+                updateRequest(scanner);
+                break;
+            case 4:
+                showRequestStatus(scanner);
+                break;
+            case 0:
+                // Save requests to file before exiting
+                FileManagment.saveRequestsToFile(requests);
+                System.out.println("Exiting the system. Goodbye!");
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
         } while (choice != 0);
 
         scanner.close();
@@ -120,26 +121,28 @@ public class inclusiveSchoolFinder {
 
             if (chosenSchool != null) {
                 System.out.println("Child Information:");
+                System.out.print("Enter child ID: ");
+                int childId = scanner.nextInt(); 
                 System.out.print("Enter child name: ");
                 String childName = scanner.next();
                 System.out.print("Enter child age: ");
                 int age = scanner.nextInt();
                 System.out.print("Enter academic year: ");
                 int academicYear = scanner.nextInt();
-
-                Child child = new Child(childName, age, academicYear);
-                Request request = new Request(child, chosenSchool, "Pending");
-
-                sendApplication(request);
+               
+                int requestId = Request.generateRequestId();
+              Child child = new Child(childId, childName, age, academicYear);
+            // creating a Request object ,add it to the requests list
+            Request request = new Request(requestId ,child, chosenSchool, "Pending");
+            requests.add(request);
+            // Display the requestId to the user 
+            System.out.println("Child registered successfully! Request ID: " + requestId);
+            sendApplication(request);
+               
             }
         }
     }
-
-    private static void deleteRequests(Scanner scanner) {
-
-        //  System.out.println("Deleting requests...");
-    }
-
+    
     private static void updateRequest(Scanner scanner) {
 
         //System.out.println("Updating requests...");
@@ -173,7 +176,7 @@ private static String chooseDisability(Scanner scanner) {
             currentIndex++;
         }
     }
-
+   
     System.out.println("Invalid choice. Please try again.");
     return null;
 }
