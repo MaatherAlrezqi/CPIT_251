@@ -80,6 +80,67 @@ public static void saveRequestsToFile(List<Request> requests) {
         e.printStackTrace();
     }
 }
+  // Method to update child data
+ public static void updateChildData(int childID, String name, int age, int academicYear, String childData_FILE) {
+        try {
+            // Read existing child data from the file into a list
+            List<Child> children = readChildDataFromFile(childData_FILE);
+
+            // Find the child to update
+            boolean found = false;
+            for (Child child : children) {
+                if (child.getChildId() == childID) {
+                    // Update child data
+                    child.setName(name);
+                    child.setAge(age);
+                    child.setAcademicYear(academicYear);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                // Write the updated data back to the file
+                writeChildDataToFile(children, childData_FILE);
+                System.out.println("Child data updated successfully.");
+            } else {
+                System.out.println("Child with ID " + childID + " not found.");
+            }
+
+        } catch (IOException e) {
+           // Handle IO exceptions
+            e.printStackTrace();
+        }
+    }
+  // Method to read child data from a file and return a list of Child objects
+    private static List<Child> readChildDataFromFile(String childData_FILE) throws IOException {
+        List<Child> children = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(childData_FILE))) {
+            // Read each line from the file and create Child objects
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(",");
+                int childId = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                int age = Integer.parseInt(parts[2]);
+                int academicYear = Integer.parseInt(parts[3]);
+                
+            // Create a Child object and add it to the list
+                Child child = new Child(childId, name, age, academicYear);
+                children.add(child);
+            }
+        }
+        return children;
+    }
+  // Method to write a list of Child objects back to a file
+    private static void writeChildDataToFile(List<Child> children, String childData_FILE) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(childData_FILE))) {
+             // Write each Child object as a line in the file
+            for (Child child : children) {
+                 writer.println(child.getChildId() + "," + child.getName() + "," + child.getAge() + "," + child.getAcademicYear());
+            }
+        }
+    }
 }
   
         

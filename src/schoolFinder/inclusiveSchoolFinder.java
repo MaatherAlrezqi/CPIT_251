@@ -15,11 +15,14 @@ public class inclusiveSchoolFinder {
     private static Map<String, School> schoolsMap = new HashMap<>();
     private static Map<String, Disability> disabilitiesMap = new HashMap<>();
     private static Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
-
+    //Define the file path for storing chid information   
+    public static final String childData_FILE = "childData.txt";
+    
     public static void main(String[] args) {
         readSchoolsFromFile("schools.txt");
         readDisabilitiesFromFile("disabilities.txt");
         readSchoolsDisabilitiesFromFile("school_disabilities.txt");
+        
       
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -42,7 +45,18 @@ public class inclusiveSchoolFinder {
                 FileManagment.deleteRequests(scanner);
                 break;
             case 3:
-                updateRequest(scanner);
+                //Enter new Chid Information for update
+                System.out.println("Update Child Information:");
+                System.out.print("Enter child ID:");
+                int childID = scanner.nextInt();
+                System.out.print("Enter New child name: ");
+                String name = scanner.next();
+                System.out.print("Enter New child age: ");
+                int age = scanner.nextInt();
+                System.out.print("Enter New academic year: ");
+                int academicYear = scanner.nextInt();
+                // call Method to update Child Information
+                FileManagment.updateChildData(childID, name, age, academicYear,childData_FILE);
                 break;
             case 4:
                 showRequestStatus(scanner);
@@ -142,12 +156,7 @@ public class inclusiveSchoolFinder {
             }
         }
     }
-    
-    private static void updateRequest(Scanner scanner) {
-
-        //System.out.println("Updating requests...");
-    }
-
+   
     private static void showRequestStatus(Scanner scanner) {
 
         // System.out.println("Showing request status...");
@@ -239,5 +248,5 @@ private static String chooseDisability(Scanner scanner) {
         System.out.println("Application sent to " + request.getSchool().getName()
                 + " for " + request.getChild().getName());
     }
-
+    
 }
