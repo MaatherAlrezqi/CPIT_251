@@ -1,7 +1,7 @@
-
 package schoolFinder;
 
 class School {
+
     private String name;
     private String district;
     private String leaderName;
@@ -34,5 +34,12 @@ class School {
 
     public void setLeaderName(String leaderName) {
         this.leaderName = leaderName;
+    }
+
+    @Override
+    public String toString() {
+        return "School Name: " + name
+                + ", District: " + district
+                + ", Leader Name: " + leaderName;
     }
 }

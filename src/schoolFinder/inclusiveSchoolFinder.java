@@ -11,19 +11,19 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class inclusiveSchoolFinder {
+
     private static List<Request> requests = new ArrayList<>();
     private static Map<String, School> schoolsMap = new HashMap<>();
     private static Map<String, Disability> disabilitiesMap = new HashMap<>();
     private static Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
     //Define the file path for storing chid information   
     public static final String childData_FILE = "childData.txt";
-    
+
     public static void main(String[] args) {
         readSchoolsFromFile("schools.txt");
         readDisabilitiesFromFile("disabilities.txt");
         readSchoolsDisabilitiesFromFile("school_disabilities.txt");
-        
-      
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -37,45 +37,45 @@ public class inclusiveSchoolFinder {
 
             choice = scanner.nextInt();
 
-        switch (choice) {
-            case 1:
-                registerChild(scanner);
-                break;
-            case 2:
-                FileManagment.deleteRequests(scanner);
-                break;
-            case 3:
-                //Enter new Chid Information for update
-                System.out.println("Update Child Information:");
-                System.out.print("Enter child ID:");
-                int childID = scanner.nextInt();
-                System.out.print("Enter New child name: ");
-                String name = scanner.next();
-                System.out.print("Enter New child age: ");
-                int age = scanner.nextInt();
-                System.out.print("Enter New academic year: ");
-                int academicYear = scanner.nextInt();
-                // call Method to update Child Information
-                FileManagment.updateChildData(childID, name, age, academicYear,childData_FILE);
-                break;
-            case 4:
-                showRequestStatus(scanner);
-                break;
-            case 0:
-                // Save requests to file before exiting
-                FileManagment.saveRequestsToFile(requests);
-                System.out.println("Exiting the system. Goodbye!");
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-        }
+            switch (choice) {
+                case 1:
+                    registerChild(scanner);
+                    break;
+                case 2:
+                    FileManagment.deleteRequests(scanner);
+                    break;
+                case 3:
+                    //Enter new Chid Information for update
+                    System.out.println("Update Child Information:");
+                    System.out.print("Enter child ID:");
+                    int childID = scanner.nextInt();
+                    System.out.print("Enter New child name: ");
+                    String name = scanner.next();
+                    System.out.print("Enter New child age: ");
+                    int age = scanner.nextInt();
+                    System.out.print("Enter New academic year: ");
+                    int academicYear = scanner.nextInt();
+                    // call Method to update Child Information
+                    FileManagment.updateChildData(childID, name, age, academicYear, childData_FILE);
+                    break;
+                case 4:
+                    showRequestStatus(scanner);
+                    break;
+                case 0:
+                    // Save requests to file before exiting
+                    FileManagment.saveRequestsToFile(requests);
+                    System.out.println("Exiting the system. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         } while (choice != 0);
 
         scanner.close();
     }
 
     private static void readSchoolsFromFile(String filename) {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -94,7 +94,7 @@ public class inclusiveSchoolFinder {
     }
 
     private static void readDisabilitiesFromFile(String filename) {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -109,7 +109,7 @@ public class inclusiveSchoolFinder {
     }
 
     private static void readSchoolsDisabilitiesFromFile(String filename) {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -136,59 +136,81 @@ public class inclusiveSchoolFinder {
             if (chosenSchool != null) {
                 System.out.println("Child Information:");
                 System.out.print("Enter child ID: ");
-                int childId = scanner.nextInt(); 
+                int childId = scanner.nextInt();
                 System.out.print("Enter child name: ");
                 String childName = scanner.next();
                 System.out.print("Enter child age: ");
                 int age = scanner.nextInt();
                 System.out.print("Enter academic year: ");
                 int academicYear = scanner.nextInt();
-               
+
                 int requestId = Request.generateRequestId();
-              Child child = new Child(childId, childName, age, academicYear);
-            // creating a Request object ,add it to the requests list
-            Request request = new Request(requestId ,child, chosenSchool, "Pending");
-            requests.add(request);
-            // Display the requestId to the user 
-            System.out.println("Child registered successfully! Request ID: " + requestId);
-            sendApplication(request);
-               
+                Child child = new Child(childId, childName, age, academicYear);
+                // creating a Request object ,add it to the requests list
+                Request request = new Request(requestId, child, chosenSchool, "Pending");
+                requests.add(request);
+                // Display the requestId to the user 
+                System.out.println("Child registered successfully! Request ID: " + requestId);
+                sendApplication(request);
+
             }
         }
     }
-   
-    private static void showRequestStatus(Scanner scanner) {
 
-        // System.out.println("Showing request status...");
+    private static void showRequestStatus(Scanner scanner) {
+        System.out.println("Enter the Request ID to check status:");
+        int requestId = scanner.nextInt();
+
+        // Find the request with the given ID
+        Request requested = null;
+        for (Request request : requests) {
+            if (request.getRequestId() == requestId) {
+                requested = request;
+                break;
+            }
+        }
+
+        // Check if the request is found
+        if (requested != null) {
+            System.out.println("Request Status:");
+            System.out.println("Request ID: " + requested.getRequestId());
+            System.out.println("Child Information: " + requested.getChild());
+            System.out.println("School Information: " + requested.getSchool());
+            System.out.println("Status: " + requested.Finalstatus());
+        } else {
+            System.out.println("Request with ID " + requestId + " not found.");
+        }
     }
+
 
 private static String chooseDisability(Scanner scanner) {
-    System.out.println("Available Disabilities:");
-    
-    int index = 1;
-    for (Disability disability : disabilitiesMap.values()) {
-        System.out.println(index + ". " + disability.getName());
-        index++;
-    }
+        System.out.println("Available Disabilities:");
 
-    System.out.println("Enter the number corresponding to the desired disability:");
-    int choice = scanner.nextInt();
-
-    // Check if the choice is valid
-    if (choice >= 1 && choice <= disabilitiesMap.size()) {
-        // Retrieve the disability name based on the user's choice
-        int currentIndex = 1;
+        int index = 1;
         for (Disability disability : disabilitiesMap.values()) {
-            if (currentIndex == choice) {
-                return disability.getName();
-            }
-            currentIndex++;
+            System.out.println(index + ". " + disability.getName());
+            index++;
         }
+
+        System.out.println("Enter the number corresponding to the desired disability:");
+        int choice = scanner.nextInt();
+
+        // Check if the choice is valid
+        if (choice >= 1 && choice <= disabilitiesMap.size()) {
+            // Retrieve the disability name based on the user's choice
+            int currentIndex = 1;
+            for (Disability disability : disabilitiesMap.values()) {
+                if (currentIndex == choice) {
+                    return disability.getName();
+                }
+                currentIndex++;
+            }
+        }
+
+        System.out.println("Invalid choice. Please try again.");
+        return null;
     }
-   
-    System.out.println("Invalid choice. Please try again.");
-    return null;
-}
+
     private static School chooseSchool(Scanner scanner, String disabilityName) {
         System.out.println("Available Schools that accept " + disabilityName + ":");
 
@@ -248,5 +270,5 @@ private static String chooseDisability(Scanner scanner) {
         System.out.println("Application sent to " + request.getSchool().getName()
                 + " for " + request.getChild().getName());
     }
-    
+
 }

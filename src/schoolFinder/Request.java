@@ -1,33 +1,39 @@
-
 package schoolFinder;
 
+import java.util.Random;
+
 class Request {
+
     private static int nextRequestId = 1;
     private int requestId;
     private Child child;
     private School school;
     private String status;
 
-public Request(int requestId ,Child child, School school, String status) {
-    this.requestId = requestId;
-    this.child = child;
-    this.school = school;
-    this.status = status;
-}
-     //  method to generate the next request ID
+    public Request(int requestId, Child child, School school, String status) {
+        this.requestId = requestId;
+        this.child = child;
+        this.school = school;
+        this.status = status;
+    }
+    //  method to generate the next request ID
+
     public static int generateRequestId() {
         return nextRequestId++;
     }
-        public String toFormattedString() {
+
+    public String toFormattedString() {
         return String.format("Request ID: %d Child ID: %d School: %s Status: %s", requestId, child.getChildId(), school.getName(), status);
     }
 
     public String toFormattedStringForFile() {
         return String.format("%d,%d,%s,%s", requestId, child.getChildId(), school.getName(), status);
     }
-      public int getRequestId() {
+
+    public int getRequestId() {
         return requestId;
     }
+
     public Child getChild() {
         return child;
     }
@@ -51,4 +57,17 @@ public Request(int requestId ,Child child, School school, String status) {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String Finalstatus() {
+        Random Dice = new Random();
+        int n = Dice.nextInt(1);
+
+        if (n == 0) {
+            status = "acceptable";
+        } else {
+            status = "Rejected";
+        }
+        return status;
     }
+
+}
