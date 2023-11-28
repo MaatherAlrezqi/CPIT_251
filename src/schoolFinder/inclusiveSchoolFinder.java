@@ -12,17 +12,21 @@ import java.util.Scanner;
 
 public class inclusiveSchoolFinder {
 
-    private static List<Request> requests = new ArrayList<>();
-    private static Map<String, School> schoolsMap = new HashMap<>();
-    private static Map<String, Disability> disabilitiesMap = new HashMap<>();
-    private static Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
+    private static final List<Request> requests = new ArrayList<>();
+    private static final Map<String, School> schoolsMap = new HashMap<>();
+    private static final Map<String, Disability> disabilitiesMap = new HashMap<>();
+    private static final Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
+    
     //Define the file path for storing chid information   
     public static final String childData_FILE = "childData.txt";
 
     public static void main(String[] args) {
-        readSchoolsFromFile("schools.txt");
-        readDisabilitiesFromFile("disabilities.txt");
-        readSchoolsDisabilitiesFromFile("school_disabilities.txt");
+  
+        // Read data from files using methods in FileManagment
+        FileManagment.readSchoolsFromFile("schools.txt", schoolsMap);
+        FileManagment.readDisabilitiesFromFile("disabilities.txt", disabilitiesMap);
+        FileManagment.readSchoolsDisabilitiesFromFile("school_disabilities.txt", schoolsDisabilitiesMap);
+
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -72,57 +76,6 @@ public class inclusiveSchoolFinder {
         } while (choice != 0);
 
         scanner.close();
-    }
-
-    private static void readSchoolsFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] schoolInfo = line.split(",");
-                String schoolName = schoolInfo[0].trim();
-                String district = schoolInfo[1].trim();
-                String leaderName = schoolInfo[2].trim();
-
-                School school = new School(schoolName, district, leaderName);
-                schoolsMap.put(schoolName, school);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void readDisabilitiesFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String disabilityName = line.trim();
-                Disability disability = new Disability(disabilityName);
-                disabilitiesMap.put(disabilityName, disability);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void readSchoolsDisabilitiesFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] schoolDisabilitiesInfo = line.split(",");
-                String schoolName = schoolDisabilitiesInfo[0].trim();
-                String[] disabilities = schoolDisabilitiesInfo[1].trim().split(" - ");
-
-                schoolsDisabilitiesMap.put(schoolName, Arrays.asList(disabilities));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private static void registerChild(Scanner scanner) {
@@ -182,8 +135,7 @@ public class inclusiveSchoolFinder {
         }
     }
 
-
-private static String chooseDisability(Scanner scanner) {
+    private static String chooseDisability(Scanner scanner) {
         System.out.println("Available Disabilities:");
 
         int index = 1;
