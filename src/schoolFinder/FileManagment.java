@@ -154,6 +154,33 @@ public class FileManagment {
             }
         }
     }
+    //Saves child data to a file
+    public static void SaveChildDataToFile(int childID, String name, int age, int academicYear, String childData_FILE) {
+        try {
+            // Read existing child data from the file into a list
+            List<Child> children = readChildDataFromFile(childData_FILE);
+
+            // Check if the child is already registered
+            for (Child child : children) {
+                if (child.getChildId() == childID) {
+                    System.out.println("Child with ID " + childID + " is already registered.");
+                    return;
+                }
+            }
+
+            // Create a new Child object
+           Child child = new Child(childID, name, age, academicYear);
+
+            // Add the new child to the list
+            children.add(child);
+
+            // Write the updated data back to the file
+            writeChildDataToFile(children, childData_FILE);
+        } catch (IOException e) {
+            // Handle IO exceptions
+            e.printStackTrace();
+        }
+    }
     
     // Method to read schools from file
     public static void readSchoolsFromFile(String filename, Map<String, School> schoolsMap) {
