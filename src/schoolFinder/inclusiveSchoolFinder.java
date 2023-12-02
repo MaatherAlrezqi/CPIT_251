@@ -35,7 +35,7 @@ public class inclusiveSchoolFinder {
             System.out.println("Select an option:");
             System.out.println("1. Register Child");
             System.out.println("2. Delete Requests");
-            System.out.println("3. Update Requests");
+            System.out.println("3. Update Child Data");
             System.out.println("4. Show Request Status");
             System.out.println("0. Exit");
 
@@ -105,6 +105,8 @@ public class inclusiveSchoolFinder {
                 // Display the requestId to the user 
                 System.out.println("Child registered successfully! Request ID: " + requestId);
                 sendApplication(request);
+                //call method to save data
+                FileManagment.SaveChildDataToFile(childId, childName,  age,academicYear, childData_FILE);
 
             }
         }
