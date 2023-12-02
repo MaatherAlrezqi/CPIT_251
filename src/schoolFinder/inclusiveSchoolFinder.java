@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class inclusiveSchoolFinder {
 
-    private static final List<Request> requests = new ArrayList<>();
+    public static final List<Request> requests = new ArrayList<>();
     private static final Map<String, School> schoolsMap = new HashMap<>();
     private static final Map<String, Disability> disabilitiesMap = new HashMap<>();
     private static final Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
@@ -63,7 +63,7 @@ public class inclusiveSchoolFinder {
                     FileManagment.updateChildData(childID, name, age, academicYear, childData_FILE);
                     break;
                 case 4:
-                    showRequestStatus(scanner);
+                    FileManagment.showRequestStatus(scanner);
                     break;
                 case 0:
                     // Save requests to file before exiting
@@ -109,31 +109,6 @@ public class inclusiveSchoolFinder {
                 FileManagment.SaveChildDataToFile(childId, childName,  age,academicYear, childData_FILE);
 
             }
-        }
-    }
-
-    private static void showRequestStatus(Scanner scanner) {
-        System.out.println("Enter the Request ID to check status:");
-        int requestId = scanner.nextInt();
-
-        // Find the request with the given ID
-        Request requested = null;
-        for (Request request : requests) {
-            if (request.getRequestId() == requestId) {
-                requested = request;
-                break;
-            }
-        }
-
-        // Check if the request is found
-        if (requested != null) {
-            System.out.println("Request Status:");
-            System.out.println("Request ID: " + requested.getRequestId());
-            System.out.println("Child Information: " + requested.getChild());
-            System.out.println("School Information: " + requested.getSchool());
-            System.out.println("Status: " + requested.Finalstatus());
-        } else {
-            System.out.println("Request with ID " + requestId + " not found.");
         }
     }
 

@@ -123,6 +123,33 @@ public class FileManagment {
             e.printStackTrace();
         }
     }
+    
+     // Method to show child data to user
+     public static void showRequestStatus(Scanner scanner) {
+        System.out.println("Enter the Request ID to check status:");
+        int requestId = scanner.nextInt();
+
+        // Find the request with the given ID
+        Request requested = null;
+        for (Request request : inclusiveSchoolFinder.requests) {
+            if (request.getRequestId() == requestId) {
+                requested = request;
+                break;
+            }
+        }
+
+        // Check if the request is found
+        if (requested != null) {
+            System.out.println("Request Status:");
+            System.out.println("Request ID: " + requested.getRequestId());
+            System.out.println("Child Information: " + requested.getChild());
+            System.out.println("School Information: " + requested.getSchool());
+            System.out.println("Status: " + requested.Finalstatus());
+        } else {
+            System.out.println("Request with ID " + requestId + " not found.");
+        }
+    }
+     
     // Method to read child data from a file and return a list of Child objects
 
     private static List<Child> readChildDataFromFile(String childData_FILE) throws IOException {
