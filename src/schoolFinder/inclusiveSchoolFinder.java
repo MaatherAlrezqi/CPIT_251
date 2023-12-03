@@ -66,8 +66,6 @@ public class inclusiveSchoolFinder {
                     FileManagment.showRequestStatus(scanner);
                     break;
                 case 0:
-                    // Save requests to file before exiting
-                    FileManagment.saveRequestsToFile(requests);
                     System.out.println("Exiting the system. Goodbye!");
                     break;
                 default:
@@ -105,6 +103,8 @@ public class inclusiveSchoolFinder {
                 // Display the requestId to the user 
                 System.out.println("Child registered successfully! Request ID: " + requestId);
                 sendApplication(request);
+                 // Save requests to file immediately after registration
+                FileManagment.saveRequestsToFile(requests);
                 //call method to save data
                 FileManagment.SaveChildDataToFile(childId, childName,  age,academicYear, childData_FILE);
 
