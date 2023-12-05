@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class inclusiveSchoolFinder {
-// Test // 
+
     
     public static final List<Request> requests = new ArrayList<>();
     private static final Map<String, School> schoolsMap = new HashMap<>();
