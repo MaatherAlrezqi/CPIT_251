@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import static schoolFinder.inclusiveSchoolFinder.childData_FILE;
 
 public class FileManagment {
  
@@ -119,6 +120,28 @@ public class FileManagment {
             e.printStackTrace();
         }
     }
+    // Method to display information for a specific child based on child ID
+   public static void displayChildInfoForID(int childID, String childData_FILE) {
+    try {
+        List<Child> children = readChildDataFromFile(childData_FILE);
+
+        // Find the child with the specified ID
+        for (Child child : children) {
+            if (child.getChildId() == childID) {
+                System.out.println("Child Information:");
+                System.out.println("Name: " + child.getName());
+                System.out.println("Age: " + child.getAge());
+                System.out.println("Academic Year: " + child.getAcademicYear());
+                return; // Exit the method after displaying information
+            }
+        }
+
+        System.out.println("Child with ID " + childID + " not found.");
+    } catch (IOException e) {
+        // Handle IO exceptions
+        e.printStackTrace();
+    }
+}
     
      // Method to show child data to user
      public static void showRequestStatus(Scanner scanner) {

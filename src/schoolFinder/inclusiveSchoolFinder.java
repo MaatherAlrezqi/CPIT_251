@@ -52,9 +52,11 @@ public class inclusiveSchoolFinder {
                     break;
                 case 3:
                     //Enter new Chid Information for update
-                    System.out.println("Update Child Information:");
                     System.out.print("Enter child ID:");
                     int childID = scanner.nextInt();
+                    // Display existing child data before updating
+                    FileManagment.displayChildInfoForID(childID, childData_FILE);
+                    System.out.println("Update Child Information:");
                     System.out.print("Enter New child name: ");
                     String name = scanner.next();
                     System.out.print("Enter New child age: ");
