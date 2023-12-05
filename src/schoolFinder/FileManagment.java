@@ -87,12 +87,32 @@ public class FileManagment {
         }
     }
     
-    
+    // Method to display information for a specific child based on child ID
+   public static void DisplayChildInfoForID(int childID, String childData_FILE) {
+    try  {
+        List<Child> Children = ReadChildDataFromFile(childData_FILE);
+        //  Find the child with the specified ID
+        for (Child child : Children) {
+            if (child.getChildId() == childID) {
+                System.out.println("Child Information: ");
+                System.out.println("Name: " + child.getName());
+                System.out.println("Age: " + child.getAge());
+                System.out.println("Academic Year: " + child.getAcademicYear());
+                return; //  Exit the method after displaying information
+            }
+        }
+
+        System.out.println("Child with ID " + childID + " not found.");
+    } catch (IOException e) {
+        // Handle IO exceptions
+        e.printStackTrace();
+    }
+} 
     // Method to update child data
-    public static void updateChildData(int childID, String name, int age, int academicYear, String childData_FILE) {
+    public static void UpdateChildData(int childID, String name, int age, int academicYear, String childData_FILE) {
         try {
-            // Read existing child data from the file into a list
-            List<Child> children = readChildDataFromFile(childData_FILE);
+            //  Read existing child data from the file into a list
+            List<Child> children = ReadChildDataFromFile(childData_FILE);
 
             // Find the child to update
             boolean found = false;
@@ -109,7 +129,7 @@ public class FileManagment {
 
             if (found) {
                 // Write the updated data back to the file
-                writeChildDataToFile(children, childData_FILE);
+                WriteChildDataToFile(children, childData_FILE);
                 System.out.println("Child data updated successfully.");
             } else {
                 System.out.println("Child with ID " + childID + " not found.");
@@ -120,28 +140,62 @@ public class FileManagment {
             e.printStackTrace();
         }
     }
-    // Method to display information for a specific child based on child ID
-   public static void displayChildInfoForID(int childID, String childData_FILE) {
-    try {
-        List<Child> children = readChildDataFromFile(childData_FILE);
+     // Method to read child data from a file and return a list of Child objects
+    public static List<Child> ReadChildDataFromFile(String childData_FILE) throws IOException {
+        List<Child> children = new ArrayList<>();
+        try ( Scanner scanner = new Scanner(new File(childData_FILE))) {
+            // Read each line from the file and create Child objects
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(",");
+                int childId = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                int age = Integer.parseInt(parts[2]);
+                int academicYear = Integer.parseInt(parts[3]);
 
-        // Find the child with the specified ID
-        for (Child child : children) {
-            if (child.getChildId() == childID) {
-                System.out.println("Child Information:");
-                System.out.println("Name: " + child.getName());
-                System.out.println("Age: " + child.getAge());
-                System.out.println("Academic Year: " + child.getAcademicYear());
-                return; // Exit the method after displaying information
+                // Create a Child object and add it to the list
+                Child child = new Child(childId, name, age, academicYear);
+                children.add(child);
             }
         }
-
-        System.out.println("Child with ID " + childID + " not found.");
-    } catch (IOException e) {
-        // Handle IO exceptions
-        e.printStackTrace();
+        return children;
     }
-}
+     // Method to write a list of Child objects back to a file
+    private static void WriteChildDataToFile(List<Child> children, String childData_FILE) throws IOException {
+        try ( PrintWriter writer = new PrintWriter(new FileWriter(childData_FILE))) {
+            // Write each Child object as a line in the file
+            for (Child child : children) {
+                writer.println(child.getChildId() + "," + child.getName() + "," + child.getAge() + "," + child.getAcademicYear());
+            }
+        }
+    }
+    //Saves child data to a file
+    public static void SaveChildDataToFile(int childID, String name, int age, int academicYear, String childData_FILE) {
+        try {
+            // Read existing child data from the file into a list
+            List<Child> children = ReadChildDataFromFile(childData_FILE);
+
+            // Check if the child is already registered
+            for (Child child : children) {
+                if (child.getChildId() == childID) {
+                    System.out.println("Child with ID " + childID + " is already registered.");
+                    return;
+                }
+            }
+
+            // Create a new Child object
+           Child child = new Child(childID, name, age, academicYear);
+
+            // Add the new child to the list
+            children.add(child);
+
+            // Write the updated data back to the file
+            WriteChildDataToFile(children, childData_FILE);
+        } catch (IOException e) {
+            // Handle IO exceptions
+            e.printStackTrace();
+        }
+    }
     
      // Method to show child data to user
      public static void showRequestStatus(Scanner scanner) {
@@ -169,64 +223,6 @@ public class FileManagment {
         }
     }
      
-    // Method to read child data from a file and return a list of Child objects
-
-    public static List<Child> readChildDataFromFile(String childData_FILE) throws IOException {
-        List<Child> children = new ArrayList<>();
-        try ( Scanner scanner = new Scanner(new File(childData_FILE))) {
-            // Read each line from the file and create Child objects
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split(",");
-                int childId = Integer.parseInt(parts[0]);
-                String name = parts[1];
-                int age = Integer.parseInt(parts[2]);
-                int academicYear = Integer.parseInt(parts[3]);
-
-                // Create a Child object and add it to the list
-                Child child = new Child(childId, name, age, academicYear);
-                children.add(child);
-            }
-        }
-        return children;
-    }
-    // Method to write a list of Child objects back to a file
-
-    private static void writeChildDataToFile(List<Child> children, String childData_FILE) throws IOException {
-        try ( PrintWriter writer = new PrintWriter(new FileWriter(childData_FILE))) {
-            // Write each Child object as a line in the file
-            for (Child child : children) {
-                writer.println(child.getChildId() + "," + child.getName() + "," + child.getAge() + "," + child.getAcademicYear());
-            }
-        }
-    }
-    //Saves child data to a file
-    public static void SaveChildDataToFile(int childID, String name, int age, int academicYear, String childData_FILE) {
-        try {
-            // Read existing child data from the file into a list
-            List<Child> children = readChildDataFromFile(childData_FILE);
-
-            // Check if the child is already registered
-            for (Child child : children) {
-                if (child.getChildId() == childID) {
-                    System.out.println("Child with ID " + childID + " is already registered.");
-                    return;
-                }
-            }
-
-            // Create a new Child object
-           Child child = new Child(childID, name, age, academicYear);
-
-            // Add the new child to the list
-            children.add(child);
-
-            // Write the updated data back to the file
-            writeChildDataToFile(children, childData_FILE);
-        } catch (IOException e) {
-            // Handle IO exceptions
-            e.printStackTrace();
-        }
-    }
     
     // Method to read schools from file
     public static void readSchoolsFromFile(String filename, Map<String, School> schoolsMap) throws IOException {

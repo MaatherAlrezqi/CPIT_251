@@ -51,20 +51,20 @@ public class inclusiveSchoolFinder {
                     FileManagment.deleteRequests(scanner,REQUESTS_FILE);
                     break;
                 case 3:
-                    //Enter new Chid Information for update
-                    System.out.print("Enter child ID:");
+                    //parent Enter new Chid Information for update
+                    System.out.print("Enter Child ID: ");
                     int childID = scanner.nextInt();
-                    // Display existing child data before updating
-                    FileManagment.displayChildInfoForID(childID, childData_FILE);
-                    System.out.println("Update Child Information:");
-                    System.out.print("Enter New child name: ");
+                    // display existing child data before updating
+                    FileManagment.DisplayChildInfoForID(childID, childData_FILE);
+                    System.out.println("Update Child Information: ");
+                    System.out.print("Enter New Child name: ");
                     String name = scanner.next();
-                    System.out.print("Enter New child age: ");
+                    System.out.print("Enter New Child age: ");
                     int age = scanner.nextInt();
-                    System.out.print("Enter New academic year: ");
+                    System.out.print("Enter New Academic Year: ");
                     int academicYear = scanner.nextInt();
-                    // call Method to update Child Information
-                    FileManagment.updateChildData(childID, name, age, academicYear, childData_FILE);
+                    // MUST call Method to update Child Information
+                    FileManagment.UpdateChildData(childID, name, age, academicYear, childData_FILE);
                     break;
                 case 4:
                     FileManagment.showRequestStatus(scanner);
