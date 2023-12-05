@@ -62,7 +62,7 @@ public void testDeleteRequests() {
     } catch (IOException e) {  
         e.printStackTrace();  
     }  
-    Scanner scanner = new Scanner(new StringReader("123\n1\n"));  
+    Scanner scanner = new Scanner("123\n1\n");  
     // Call the deleteRequests method  
     FileManagment.deleteRequests(scanner,testFilePath );  
     // Check that the request was deleted  

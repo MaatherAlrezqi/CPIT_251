@@ -14,9 +14,9 @@ public class inclusiveSchoolFinder {
 
     
     public static final List<Request> requests = new ArrayList<>();
-    private static final Map<String, School> schoolsMap = new HashMap<>();
-    private static final Map<String, Disability> disabilitiesMap = new HashMap<>();
-    private static final Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
+    public static final Map<String, School> schoolsMap = new HashMap<>();
+    public static final Map<String, Disability> disabilitiesMap = new HashMap<>();
+    public static final Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
     // Define the file path for storing requests   
     private static final String REQUESTS_FILE = "requests.txt";
     //Define the file path for storing chid information   
@@ -116,7 +116,7 @@ public class inclusiveSchoolFinder {
         }
     }
 
-    private static String chooseDisability(Scanner scanner) {
+    public static String chooseDisability(Scanner scanner) {
         System.out.println("Available Disabilities:");
 
         int index = 1;
@@ -144,7 +144,7 @@ public class inclusiveSchoolFinder {
         return null;
     }
 
-    private static School chooseSchool(Scanner scanner, String disabilityName) {
+    public static School chooseSchool(Scanner scanner, String disabilityName) {
         System.out.println("Available Schools that accept " + disabilityName + ":");
 
         // Iterate through schools to find those that accept the chosen disability
