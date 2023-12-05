@@ -44,7 +44,7 @@ public class Child {
 // toString method to provide a string representation of a Child object
      @Override
      public String toString() {
-        return "Child ID: " + childId +
+        return "Child ID:  " + childId +
                 "\nName: " + name +
                 "\nAge: " + age +
                 "\nAcademic Year: " + academicYear ;
