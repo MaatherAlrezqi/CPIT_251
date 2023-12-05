@@ -8,55 +8,51 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class FileManagment {
-    // Define the file path for storing requests   
-    private static final String REQUESTS_FILE = "requests.txt";
+ 
     
     // Method to initialize requests from file
-    public static List<Request> initRequestsFromFile() {
-        List<Request> requests = new ArrayList<>();
-        try ( Scanner scanner = new Scanner(new File(REQUESTS_FILE))) {
+    public static List<Request> initRequestsFromFile(String requestsFile) {
+    List<Request> requests = new ArrayList<>();
+    try (Scanner scanner = new Scanner(new File(requestsFile))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
+                System.out.println("DEBUG: Line from file: " + line); // Add this line for debugging
                 String[] parts = line.split(",");
                 //  the order of attributes in the file is: requestId, childId, schoolName, status
                 int requestId = Integer.parseInt(parts[0]);
                 int childId = Integer.parseInt(parts[1]);
                 String schoolName = parts[2];
                 String status = parts[3];
-
-                // Create Child and School and request objeect 
+                 // Create Child and School and request objeect 
                 Child child = new Child(childId, "ChildName", 0, 0);
                 School school = new School(schoolName, "District", "LeaderName");
                 Request request = new Request(requestId, child, school, status);
                 requests.add(request);
             }
-        } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return requests;
     }
-    
-    
+     
     // Method to delete requests based on user input
-    public static void deleteRequests(Scanner scanner) {
-        List<Request> requests = initRequestsFromFile();
+    public static void deleteRequests(Scanner scanner, String requestsFile) {
+        List<Request> requests = initRequestsFromFile(requestsFile);
         System.out.print("Enter child ID to delete requests: ");
-        int childIdToDelete = scanner.nextInt();
+        int childIdToDelete =  scanner.nextInt();
         // Display requests related to the specified child ID
         displayRequestsForChild(requests, childIdToDelete);
         System.out.print("Enter request ID to delete: ");
-        int requestIdToDelete = scanner.nextInt();
-
+        int requestIdToDelete =  scanner.nextInt();
         // Remove the selected request from the list
         Request requestToDelete = findRequest(requests, childIdToDelete, requestIdToDelete);
         if (requestToDelete != null) {
             requests.remove(requestToDelete);
-            saveRequestsToFile(requests);
+            saveRequestsToFile(requests, requestsFile);
             System.out.println("Request deleted successfully.");
         } else {
             System.out.println("No matching request found. No request deleted.");
         }
-
     }
     
     // Method to display requests for a specific child
@@ -69,7 +65,7 @@ public class FileManagment {
         }
     }
     
-    
+ 
     // Method to find a request in the list based on child ID and request ID
     private static Request findRequest(List<Request> requests, int childId, int requestId) {
         for (Request Request : requests) {
@@ -79,10 +75,9 @@ public class FileManagment {
         }
         return null;
     }
-// Method to save the updated list of requests to the file
-
-    public static void saveRequestsToFile(List<Request> requests) {
-        try ( PrintWriter writer = new PrintWriter(new FileWriter(REQUESTS_FILE))) {
+  // Method to save the updated list of requests to the file
+    public static void saveRequestsToFile(List<Request> requests, String requestsFile) {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(requestsFile))){
             for (Request request : requests) {
                 writer.println(request.toFormattedStringForFile());
             }
@@ -90,8 +85,9 @@ public class FileManagment {
             e.printStackTrace();
         }
     }
+    
+    
     // Method to update child data
-
     public static void updateChildData(int childID, String name, int age, int academicYear, String childData_FILE) {
         try {
             // Read existing child data from the file into a list
@@ -152,7 +148,7 @@ public class FileManagment {
      
     // Method to read child data from a file and return a list of Child objects
 
-    private static List<Child> readChildDataFromFile(String childData_FILE) throws IOException {
+    public static List<Child> readChildDataFromFile(String childData_FILE) throws IOException {
         List<Child> children = new ArrayList<>();
         try ( Scanner scanner = new Scanner(new File(childData_FILE))) {
             // Read each line from the file and create Child objects
@@ -210,21 +206,27 @@ public class FileManagment {
     }
     
     // Method to read schools from file
-    public static void readSchoolsFromFile(String filename, Map<String, School> schoolsMap) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
+    public static void readSchoolsFromFile(String filename, Map<String, School> schoolsMap) throws IOException {
+    File file = new File(filename);
+    if (!file.exists()) {
+        System.err.println("File not found: " + filename);
+        return;
+    }
 
-            while ((line = reader.readLine()) != null) {
-                String[] schoolInfo = line.split(",");
-                String schoolName = schoolInfo[0].trim();
-                String district = schoolInfo[1].trim();
-                String leaderName = schoolInfo[2].trim();
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        String line;
 
-                School school = new School(schoolName, district, leaderName);
-                schoolsMap.put(schoolName, school);
-            }
+        while ((line = reader.readLine()) != null) {
+            String[] schoolInfo = line.split(",");
+            String schoolName = schoolInfo[0].trim();
+            String district = schoolInfo[1].trim();
+            String leaderName = schoolInfo[2].trim();
 
-        } catch (IOException e) {
+            School school = new School(schoolName, district, leaderName);
+            schoolsMap.put(schoolName, school);
+        }
+    }
+         catch (IOException e) {
             e.printStackTrace();
         }
     }

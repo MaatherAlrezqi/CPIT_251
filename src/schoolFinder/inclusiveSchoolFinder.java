@@ -16,11 +16,12 @@ public class inclusiveSchoolFinder {
     private static final Map<String, School> schoolsMap = new HashMap<>();
     private static final Map<String, Disability> disabilitiesMap = new HashMap<>();
     private static final Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
-    
+    // Define the file path for storing requests   
+    private static final String REQUESTS_FILE = "requests.txt";
     //Define the file path for storing chid information   
     public static final String childData_FILE = "childData.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
   
         // Read data from files using methods in FileManagment
         FileManagment.readSchoolsFromFile("schools.txt", schoolsMap);
@@ -46,7 +47,7 @@ public class inclusiveSchoolFinder {
                     registerChild(scanner);
                     break;
                 case 2:
-                    FileManagment.deleteRequests(scanner);
+                    FileManagment.deleteRequests(scanner,REQUESTS_FILE);
                     break;
                 case 3:
                     //Enter new Chid Information for update
@@ -104,7 +105,7 @@ public class inclusiveSchoolFinder {
                 System.out.println("Child registered successfully! Request ID: " + requestId);
                 sendApplication(request);
                  // Save requests to file immediately after registration
-                FileManagment.saveRequestsToFile(requests);
+                FileManagment.saveRequestsToFile(requests, REQUESTS_FILE);
                 //call method to save data
                 FileManagment.SaveChildDataToFile(childId, childName,  age,academicYear, childData_FILE);
 
