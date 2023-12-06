@@ -94,6 +94,20 @@ public class inclusiveSchoolFinderTest {
         schoolsDisabilitiesMap.put("Al-Baraem school", Arrays.asList("ADHD", "Visual Impairment", "Hearing Impairment"));
 
         inclusiveSchoolFinder inclusiveSchoolFinder = new inclusiveSchoolFinder();
+        inclusiveSchoolFinder.schoolsMap.putAll(schoolsMap);
+        inclusiveSchoolFinder.schoolsDisabilitiesMap.putAll(schoolsDisabilitiesMap);
+
+        // Mock user input
+        Scanner scanner = new Scanner("1");
+
+        // Call the method
+        School result = inclusiveSchoolFinder.chooseSchool(scanner, "Cerebral Palsy");
+
+        // Add debug output
+        System.out.println("Result school: " + result);
+
+        // Verify the result
+        assertEquals("Al-Bayan school", result.getName());
 
     }
 }
