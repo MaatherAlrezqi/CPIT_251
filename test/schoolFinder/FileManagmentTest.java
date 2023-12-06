@@ -69,26 +69,43 @@ public class FileManagmentTest {
     /**
      * Test of updateChildData method, of class FileManagment.
      */
-    @Test
-    public void testUpdateChildData() {
-        // Set up a test scenario 
-        int childID = 1; // Assuming a child with ID 1 exists in the test data 
-        String name = "sara";
-        int age = 10;
-        int academicYear = 5;
-        String childData_FILE = "test_child_data.txt";
-        // Create a temporary file for testing 
-        String testFilePath = "test_child_data.txt";
-        try (PrintWriter writer = new PrintWriter(new FileWriter(testFilePath))) {
-            writer.println("1,sara,10,5");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Test of ShowRequestStatus method, of class FileManagment.
-     */
+   @Test 
+   public void testUpdateChildData() { 
+    // Set up a test scenario 
+    int childID = 1; // Assuming a child with ID 1 exists in the test data 
+    String name = "NORAH"; 
+    int age = 9; 
+    int academicYear = 3; 
+    String childData_FILE = "test_child_data.txt"; // Provide a valid file path 
+    // Create a temporary file for testing 
+    String testFilePath = "test_child_data.txt"; 
+    try (PrintWriter writer = new PrintWriter(new FileWriter(testFilePath))) { 
+        // Sample child data 
+        writer.println("1,NORAH,9,3"); 
+    } catch (IOException e) { 
+        e.printStackTrace(); 
+    } 
+    // Call the updateChildData method
+     FileManagment.UpdateChildData(childID, name, age, academicYear, childData_FILE); 
+    // Read the updated child data from the file 
+    try { 
+        List<Child> updatedChildren = FileManagment.ReadChildDataFromFile(childData_FILE); 
+        // Check that the child data was updated 
+        boolean found = false; 
+        for (Child child : updatedChildren) { 
+            if (child.getChildId() == childID && child.getName().equals(name) 
+                    && child.getAge() == age && child.getAcademicYear() == academicYear) { 
+                found = true; 
+                break; 
+            } 
+        } 
+        assertTrue("Child data was not updated.", found); 
+    } catch (IOException e) { 
+        e.printStackTrace(); // Handle the exception as needed 
+    } 
+    // Clean up: Delete the temporary file 
+    new File(testFilePath).delete(); 
+}
     @Test
     public void testShowRequestStatus() {
         Request request1 = new Request(1, new Child(001, "neno", 8, 4), new School("Al-Bayan school", "Al-Andalus District", "Fatimah Ali"), "Accepted");
