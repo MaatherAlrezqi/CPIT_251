@@ -108,6 +108,5 @@ public class inclusiveSchoolFinderTest {
 
         // Verify the result
         assertEquals("Al-Bayan school", result.getName());
-
     }
 }
