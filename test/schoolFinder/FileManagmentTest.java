@@ -70,5 +70,25 @@ public void testDeleteRequests() {
     new File(testFilePath).delete();  
 }
 
-
+    /** 
+     * Test of updateChildData method, of class FileManagment. 
+     */
+   @Test 
+public void testUpdateChildData() { 
+    // Set up a test scenario 
+    int childID = 1; // Assuming a child with ID 1 exists in the test data 
+    String name = "sara"; 
+    int age = 10; 
+    int academicYear = 5; 
+    String childData_FILE = "test_child_data.txt";  
+    // Create a temporary file for testing 
+    String testFilePath = "test_child_data.txt"; 
+    try (PrintWriter writer = new PrintWriter(new FileWriter(testFilePath))) { 
+        writer.println("1,sara,10,5"); 
+    } catch (IOException e) { 
+        e.printStackTrace(); 
+    }
 }
+}
+
+
