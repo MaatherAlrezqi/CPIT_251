@@ -38,16 +38,23 @@ public class inclusiveSchoolFinderTest {
 
     }
 
-        @Test
+    @Test
     public void testRegisterChild() throws IOException {
         // Set up a mock input for the scanner
-        String input = "1\n" + // Choose option 1 for "Register Child"
-                "1\n" + // Choose the first disability
-                "1\n" + // Choose the first school
-                "123\n" + // Enter child ID
-                "Amal\n" + // Enter child name
-                "8\n" + // Enter child age
-                "5\n" + // Enter academic year
+        String input = "1\n"
+                + // Choose option 1 for "Register Child"
+                "1\n"
+                + // Choose the first disability
+                "1\n"
+                + // Choose the first school
+                "123\n"
+                + // Enter child ID
+                "Amal\n"
+                + // Enter child name
+                "8\n"
+                + // Enter child age
+                "5\n"
+                + // Enter academic year
                 "0\n"; // Choose option 0 to exit
 
         InputStream in = new ByteArrayInputStream(input.getBytes());
@@ -59,6 +66,7 @@ public class inclusiveSchoolFinderTest {
         assertEquals(1, inclusiveSchoolFinder.requests.size());
         assertEquals("Amal", inclusiveSchoolFinder.requests.get(0).getChild().getName());
     }
+
     @Test
     public void testChooseDisability() {
         Map<String, Disability> disabilitiesMap = new HashMap<>();
@@ -76,16 +84,16 @@ public class inclusiveSchoolFinderTest {
     }
 
     @Test
-public void testChooseSchool() {
-    Map<String, School> schoolsMap = new HashMap<>();
-    schoolsMap.put("1", new School("Al-Bayan school", "Al-Andalus District", "Fatimah Ali"));
-    schoolsMap.put("2", new School("Al-Baraem school", "Sharafiyah District", "Auhood Mohamed"));
+    public void testChooseSchool() {
+        Map<String, School> schoolsMap = new HashMap<>();
+        schoolsMap.put("1", new School("Al-Bayan school", "Al-Andalus District", "Fatimah Ali"));
+        schoolsMap.put("2", new School("Al-Baraem school", "Sharafiyah District", "Auhood Mohamed"));
 
-    Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
-    schoolsDisabilitiesMap.put("Al-Bayan school", Arrays.asList("Cerebral Palsy", "Visual Impairment", "Hearing Impairment"));
-    schoolsDisabilitiesMap.put("Al-Baraem school", Arrays.asList("ADHD", "Visual Impairment", "Hearing Impairment"));
+        Map<String, List<String>> schoolsDisabilitiesMap = new HashMap<>();
+        schoolsDisabilitiesMap.put("Al-Bayan school", Arrays.asList("Cerebral Palsy", "Visual Impairment", "Hearing Impairment"));
+        schoolsDisabilitiesMap.put("Al-Baraem school", Arrays.asList("ADHD", "Visual Impairment", "Hearing Impairment"));
 
-    inclusiveSchoolFinder inclusiveSchoolFinder = new inclusiveSchoolFinder();
-    
-}
+        inclusiveSchoolFinder inclusiveSchoolFinder = new inclusiveSchoolFinder();
+
+    }
 }
